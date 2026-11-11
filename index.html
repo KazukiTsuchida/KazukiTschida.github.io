@@ -1,1 +1,478 @@
 
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>土田和輝 | Kazuki Tsuchida</title>
+  <meta name="description" content="土田和輝（富山大学大学院）の研究紹介ページ。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --line: #e6e6e6;
+      --soft: #f5f5f5;
+      --accent: #2f5d46;
+      --maxw: 760px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111111;
+        --text: #ececec;
+        --muted: #9a9a9a;
+        --line: #2a2a2a;
+        --soft: #1b1b1b;
+        --accent: #8cc2a3;
+      }
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: "Inter", "Noto Sans JP", system-ui, sans-serif;
+      font-size: 15.5px; line-height: 1.9;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
+    a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+    /* 言語切り替え */
+    html[lang="ja"] .en { display: none !important; }
+    html[lang="en"] .ja { display: none !important; }
+
+    /* ナビ */
+    header { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
+    .nav { max-width: var(--maxw); margin: 0 auto; padding: 12px 16px; display: flex; align-items: center; gap: 16px; }
+    .nav .brand { font-weight: 600; text-decoration: none; margin-right: auto; }
+    .nav ul { display: flex; gap: 16px; list-style: none; }
+    .nav ul a { text-decoration: none; color: var(--muted); font-size: 13.5px; }
+    .nav ul a:hover { color: var(--text); }
+    /* ページタブ */
+    .page-tabs {
+      max-width: var(--maxw); margin: 0 auto; padding: 0 16px;
+      display: flex; gap: 22px; overflow-x: auto; scrollbar-width: none;
+    }
+    .page-tabs::-webkit-scrollbar { display: none; }
+    .page-tabs button {
+      background: none; border: none; border-bottom: 2px solid transparent;
+      font: inherit; font-size: 13.5px; color: var(--muted);
+      padding: 6px 0 9px; cursor: pointer; white-space: nowrap;
+    }
+    .page-tabs button:hover { color: var(--text); }
+    .page-tabs button[aria-selected="true"] { color: var(--text); border-bottom-color: var(--text); font-weight: 500; }
+    main [data-page] { display: none; }
+    main [data-page].active { display: block; }
+    main .hero[data-page].active { display: flex; }
+    section.first { border-top: none; }
+
+    .lang-btn {
+      background: none; border: 1px solid var(--line); color: var(--text);
+      font: inherit; font-size: 12.5px; padding: 2px 10px; border-radius: 4px; cursor: pointer;
+    }
+    .lang-btn:hover { border-color: var(--text); }
+
+    main { max-width: var(--maxw); margin: 0 auto; padding: 0 16px; }
+
+    /* ヒーロー */
+    .hero { display: flex; gap: 28px; align-items: center; padding: 64px 0 48px; }
+    .avatar {
+      width: 112px; height: 112px; border-radius: 50%; flex-shrink: 0;
+      object-fit: cover; background: var(--soft); border: 1px solid var(--line);
+    }
+    .avatar-fallback {
+      width: 112px; height: 112px; border-radius: 50%; flex-shrink: 0;
+      background: var(--soft); border: 1px solid var(--line);
+      display: none; align-items: center; justify-content: center;
+      color: var(--muted); font-size: 28px; font-weight: 500;
+    }
+    .hero h1 { font-size: 1.9rem; font-weight: 600; letter-spacing: .02em; line-height: 1.4; }
+    .hero .sub { color: var(--muted); font-size: .95rem; }
+    .hero .affil { margin-top: 10px; font-size: .92rem; }
+
+    /* セクション */
+    section { padding: 44px 0; border-top: 1px solid var(--line); }
+    h2 { font-size: .8rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+    h3 { font-size: 1rem; font-weight: 600; margin: 24px 0 8px; }
+    h3:first-of-type { margin-top: 0; }
+    p + p { margin-top: .9em; }
+
+    .research-item { padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .research-item:last-child { border-bottom: none; }
+    .research-item h4 { font-size: .98rem; font-weight: 600; }
+    .research-item p { color: var(--muted); font-size: .92rem; }
+
+    .pubs { list-style: none; }
+    .pubs li { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: .93rem; }
+    .pubs li:last-child { border-bottom: none; }
+    .pubs .title { font-weight: 500; }
+    .pubs .meta { color: var(--muted); font-size: .86rem; }
+    .me { font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+    .badge {
+      display: inline-block; font-size: .72rem; padding: 0 7px; margin-left: 4px;
+      border: 1px solid var(--line); border-radius: 3px; color: var(--muted); vertical-align: 1px;
+    }
+
+    dl.cv { display: grid; grid-template-columns: 7.5em 1fr; gap: 6px 16px; font-size: .93rem; }
+    dl.cv dt { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+    /* ギャラリー */
+    .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+    .tab {
+      background: none; border: 1px solid var(--line); color: var(--muted);
+      font: inherit; font-size: 13px; padding: 3px 12px; border-radius: 999px; cursor: pointer;
+    }
+    .tab[aria-selected="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+    .grid figure { margin: 0; }
+    .grid .frame { aspect-ratio: 4 / 3; background: var(--soft); border: 1px solid var(--line); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .grid img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; }
+    .grid .ph { color: var(--muted); font-size: 12px; }
+    .grid figcaption { font-size: .82rem; color: var(--muted); margin-top: 4px; line-height: 1.6; }
+
+    .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,.88); display: none; align-items: center; justify-content: center; z-index: 50; padding: 16px; cursor: zoom-out; }
+    .lightbox.open { display: flex; flex-direction: column; gap: 10px; }
+    .lightbox img { max-width: 100%; max-height: 85vh; }
+    .lightbox p { color: #ddd; font-size: .9rem; }
+
+    /* NOVUMEX */
+    .novumex-name { font-size: 1.35rem; font-weight: 600; letter-spacing: .08em; }
+    .novumex-ja { color: var(--muted); font-size: .92rem; }
+    .acronym { margin: 12px 0 20px; font-size: .86rem; color: var(--muted); }
+    .acronym b { color: var(--accent); font-weight: 600; }
+    .pending { color: var(--muted); font-size: .92rem; }
+
+    .ranking { list-style: none; counter-reset: rank; }
+    .ranking li { counter-increment: rank; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: .95rem; }
+    .ranking li:last-child { border-bottom: none; }
+    .ranking li::before { content: counter(rank); display: inline-block; width: 1.8em; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+    .contact dl { display: grid; grid-template-columns: 7.5em 1fr; gap: 6px 16px; font-size: .93rem; }
+    .contact dt { color: var(--muted); }
+
+    footer { max-width: var(--maxw); margin: 0 auto; padding: 32px 16px 48px; color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--line); }
+
+    @media (max-width: 640px) {
+      .nav ul { display: none; }
+      .hero { flex-direction: column; align-items: flex-start; padding-top: 40px; gap: 18px; }
+      dl.cv, .contact dl { grid-template-columns: 1fr; gap: 0; }
+      dl.cv dd, .contact dd { margin-bottom: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a class="brand" href="#top"><span class="ja">土田和輝</span><span class="en">Kazuki Tsuchida</span></a>
+    <button class="lang-btn" id="langBtn" type="button">EN</button>
+  </nav>
+  <div class="page-tabs" role="tablist" id="pageTabs">
+    <button type="button" data-page="profile"><span class="ja">プロフィール</span><span class="en">Profile</span></button>
+    <button type="button" data-page="publications"><span class="ja">業績</span><span class="en">Publications</span></button>
+    <button type="button" data-page="gallery"><span class="ja">写真</span><span class="en">Gallery</span></button>
+    <button type="button" data-page="novumex">NOVUMEX</button>
+    <button type="button" data-page="other"><span class="ja">その他</span><span class="en">Other</span></button>
+    <button type="button" data-page="contact"><span class="ja">連絡先</span><span class="en">Contact</span></button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===== ヒーロー ===== -->
+  <div class="hero" data-page="profile">
+    <!-- 顔写真：images/profile.jpg に置くと表示されます -->
+    <img class="avatar" src="images/profile.jpg" alt=""
+         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+    <div class="avatar-fallback">KT</div>
+    <div>
+      <h1><span class="ja">土田 和輝</span><span class="en">Kazuki Tsuchida</span></h1>
+      <p class="sub"><span class="ja">Kazuki Tsuchida</span><span class="en">土田 和輝</span></p>
+      <p class="affil">
+        <span class="ja">富山大学大学院 理工学研究科 博士前期課程</span>
+        <span class="en">Master's Student, Graduate School of Science and Engineering, University of Toyama</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- ===== プロフィール ===== -->
+  <section id="about" data-page="profile">
+    <h2><span class="ja">プロフィール</span><span class="en">About</span></h2>
+    <p class="ja">
+      日本列島に産する超苦鉄質岩、特に輝岩(Pyroxenite)とそのアクセサリー鉱物を対象に成因と変成過程を研究しています。
+      蛇紋岩メランジュ等に産する下部地殻起源の集積岩を対象に、野外調査・岩石記載・鉱物化学分析を組み合わせて、
+      それらが経験した多段階の履歴と大陸下部地殻の形成史を読み解くことを目指しています。
+    </p>
+    <p class="en">
+      I study ultramafic rocks in the Japanese Islands, particularly the origin and metamorphic evolution of pyroxenites.
+      Focusing on ultramafic blocks in serpentinite mélanges and lower-crustal ultramafic rocks,
+      I combine fieldwork, petrography, and mineral chemistry to unravel their multistage histories
+      and the formation of the lower continental crust.
+    </p>
+  </section>
+
+  <!-- ===== 研究テーマ ===== -->
+  <section id="research" data-page="profile">
+    <h2><span class="ja">研究テーマ</span><span class="en">Research</span></h2>
+    <div class="research-item">
+      <h4><span class="ja">黒瀬川帯蛇紋岩メランジュ中の輝岩</span><span class="en">Pyroxenites in serpentinite mélanges of the Kurosegawa Belt</span></h4>
+      <p class="ja">メランジュ中の輝岩・超苦鉄質岩ブロックから、島弧下部地殻の形成と変成の履歴を復元する。</p>
+      <p class="en">Reconstructing the formation and metamorphic history of the arc lower crust from pyroxenite and ultramafic blocks.</p>
+    </div>
+    <div class="research-item">
+      <h4><span class="ja">長門構造帯の超苦鉄質岩</span><span class="en">Ultramafic rocks of the Nagato Tectonic Zone</span></h4>
+      <p class="ja">接触変成から蛇紋岩メランジュへの取り込みまで、超苦鉄質岩が経験した多段階の進化過程を明らかにする。</p>
+      <p class="en">Unraveling the multistage evolution of ultramafic rocks, from contact metamorphism to incorporation into serpentinite mélange.</p>
+    </div>
+  </section>
+
+  <!-- ===== 業績 ===== -->
+  <section id="publications" data-page="publications" class="first">
+    <h2><span class="ja">研究業績</span><span class="en">Publications</span></h2>
+
+    <h3><span class="ja">論文</span><span class="en">Papers</span></h3>
+    <ul class="pubs">
+      <li>
+        <span class="me">Tsuchida, K.</span>, Sawada, H., Owada, M.
+        <div class="title">From contact metamorphism to serpentinite mélange: Multistage evolution of ultramafic rocks in the Nagato Tectonic Zone, southwest Japan</div>
+        <div class="meta"><em>Journal of Mineralogical and Petrological Sciences</em> <span class="badge">under review</span></div>
+      </li>
+    </ul>
+
+    <h3><span class="ja">学会発表</span><span class="en">Presentations</span></h3>
+    <ul class="pubs">
+      <li>
+        <span class="me">土田和輝</span>・沢田輝
+        <div class="title">黒瀬川帯蛇紋岩メランジュ中の単斜輝岩に産するFe–Ni–Cu鉱物から推定される島弧下部地殻由来超苦鉄質岩の変成環境</div>
+        <div class="meta">
+          <span class="ja">日本鉱物科学会 2026年年会</span><span class="en">JAMS Annual Meeting 2026</span>,
+          R8P-10 <span class="badge"><span class="ja">ポスター</span><span class="en">Poster</span></span>
+          · <a href="https://pub.confit.atlas.jp/ja/event/jams2026/presentation/R8P-10" target="_blank" rel="noopener">Link</a>
+        </div>
+      </li>
+      <li>
+        <span class="me">土田和輝</span>・沢田輝・大和田正明
+        <div class="title">西南日本内帯長門構造帯に産するanthophyllite rockの岩石学的記載と形成プロセスの解明</div>
+        <div class="meta">
+          <span class="ja">日本地質学会 第133年学術大会</span><span class="en">133rd Annual Meeting of the Geological Society of Japan</span> (2026),
+          T4-O-7 <span class="badge"><span class="ja">口頭</span><span class="en">Oral</span></span>
+          · <a href="https://pub.confit.atlas.jp/ja/event/geosocjp133/presentation/guHTHqcK-07" target="_blank" rel="noopener">Link</a>
+        </div>
+      </li>
+      <li>
+        <span class="me">土田和輝</span>・沢田輝・大和田正明
+        <div class="title">長門構造帯蛇紋岩メランジュ中に産する角閃石を主体とする岩石の岩石学的再検討</div>
+        <div class="meta">
+          <span class="ja">日本地球惑星科学連合 2026年大会</span><span class="en">JpGU Meeting 2026</span>,
+          SCG68-P02 <span class="badge"><span class="ja">ポスター</span><span class="en">Poster</span></span>
+        </div>
+      </li>
+      <li>
+        <span class="me">土田和輝</span>・沢田輝
+        <div class="title">黒瀬川帯蛇紋岩メランジュ中に産出する輝岩の岩石学的記載と形成過程の考察：高知県中央部を例に</div>
+        <div class="meta">
+          <span class="ja">日本地質学会 第132年学術大会</span><span class="en">132nd Annual Meeting of the Geological Society of Japan</span> (2025)
+          · <a href="https://www.jstage.jst.go.jp/article/geosocabst/2025/0/2025_439/_pdf/-char/ja" target="_blank" rel="noopener">J-STAGE</a>
+        </div>
+      </li>
+      <li>
+        <span class="me">土田和輝</span>・内山賢太・福田昴生・一井新・坂口有人
+        <div class="title">学生によるアウトリーチイベントのモデル提唱 〜山口県内で開催した小・中・高等学生向けのフィールドワーク型イベントの実施例より〜</div>
+        <div class="meta">
+          <span class="ja">日本地球惑星科学連合 2025年大会</span><span class="en">JpGU Meeting 2025</span>,
+          G04-P04 <span class="badge"><span class="ja">ポスター</span><span class="en">Poster</span></span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ===== 経歴 ===== -->
+  <section id="education" data-page="profile">
+    <h2><span class="ja">経歴</span><span class="en">Education</span></h2>
+    <dl class="cv">
+      <dt>2026.04 –</dt>
+      <dd>
+        <span class="ja">富山大学大学院 理工学研究科 博士前期課程</span>
+        <span class="en">Master's Program, Graduate School of Science and Engineering, University of Toyama</span>
+      </dd>
+      <dt>2022.04 – 2026.03</dt>
+      <dd>
+        <span class="ja">山口大学 理学部 地球圏システム科学科</span>
+        <span class="en">B.Sc., Department of Earth Sciences, Faculty of Science, Yamaguchi University</span>
+      </dd>
+    </dl>
+  </section>
+
+  <!-- ===== ギャラリー ===== -->
+  <section id="gallery" data-page="gallery" class="first">
+    <h2><span class="ja">写真</span><span class="en">Gallery</span></h2>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- ===== NOVUMEX ===== -->
+  <section id="novumex" data-page="novumex" class="first">
+    <h2>NOVUMEX</h2>
+    <p class="novumex-name">NOVUMEX</p>
+    <p class="novumex-ja"><span class="ja">次世代超苦鉄質岩石学巡検会</span><span class="en">Next-generation Ultramafic Petrology Excursion Group</span></p>
+    <p class="acronym">
+      <b>N</b>ext-generation <b>O</b>rganization for the <b>V</b>anguard of <b>U</b>ltramafic science
+      through <b>M</b>ultidisciplinary <b>EX</b>cursions
+    </p>
+
+    <h3><span class="ja">設立趣旨</span><span class="en">About</span></h3>
+    <div class="ja">
+      <p>超苦鉄質岩は、マントルや下部地殻の構成物質であり、超苦鉄質岩体はそれらが地表に至るまでの歴史を直接記録した、地球内部を知るための貴重な手がかりです。しかし、日本列島においてその露出域は限られており、授業や実習で実物に触れる機会は多くありません。また、各地に点在する岩体を一人で訪れるのは、特に学生や若手研究者にとってハードルが高いと思われます。</p>
+      <p>NOVUMEX（次世代超苦鉄質岩石学巡検会）は、超苦鉄質岩に興味を持つ人が集まり、露頭の前で共に学び、議論するための巡検会です。蛇紋岩メランジュ、オフィオライト、マントルゼノリス、下部地殻の集積岩など、成因を問わずあらゆる超苦鉄質岩を対象とします。</p>
+      <p>巡検は、参加者が持ち回りで自身の研究地域や関連する地域を案内する形で行います。案内者は自分の研究を露頭で語り、参加者はそれを本気で問い直す——そうした議論の積み重ねの先に、新しい超苦鉄質岩石学を切り拓くことを目指します。</p>
+      <p>運営は固く決めず、石の好きな仲間が予定を合わせて、気軽に、しかし真剣に巡検に出かける集まりでありたいと考えています。</p>
+    </div>
+    <div class="en">
+      <p>Ultramafic rocks are constituents of the mantle and lower crust, and ultramafic bodies directly record their journey to the surface, making them invaluable windows into Earth's interior. In the Japanese Islands, however, their exposures are limited, and opportunities to see them in coursework are rare. Visiting scattered ultramafic bodies alone can also be a high hurdle, especially for students and early-career researchers.</p>
+      <p>NOVUMEX is a field excursion group where anyone interested in ultramafic rocks can gather to learn and discuss together in front of outcrops. We cover all ultramafic rocks regardless of origin — serpentinite mélanges, ophiolites, mantle xenoliths, lower-crustal cumulates, and more.</p>
+      <p>Excursions are led in rotation by participants, each guiding the group through their own field area or related regions. The guide presents their research at the outcrop, and participants challenge it in earnest. Through such discussions, we aim to open up a new ultramafic petrology.</p>
+      <p>We keep the organization informal: a group of rock lovers who coordinate their schedules to head into the field — casually, but seriously.</p>
+    </div>
+
+    <h3><span class="ja">巡検の記録</span><span class="en">Past Excursions</span></h3>
+    <p class="pending"><span class="ja">準備中</span><span class="en">Coming soon</span></p>
+
+    <h3><span class="ja">参加・問い合わせ</span><span class="en">Join / Contact</span></h3>
+    <p class="pending"><span class="ja">準備中</span><span class="en">Coming soon</span></p>
+  </section>
+
+  <!-- ===== その他 ===== -->
+  <section id="other" data-page="other" class="first">
+    <h2><span class="ja">その他</span><span class="en">Other</span></h2>
+
+    <h3><span class="ja">日本の3大アニメ</span><span class="en">Top 3 Japanese Anime</span></h3>
+    <ol class="ranking">
+      <li><span class="ja">機動戦士Zガンダム</span><span class="en">Mobile Suit Zeta Gundam</span></li>
+      <li><span class="ja">スーパーの裏でヤニ吸うふたり</span><span class="en">Smoking Behind the Supermarket with You</span></li>
+      <li><span class="ja">トリニティセブン</span><span class="en">Trinity Seven</span></li>
+    </ol>
+  </section>
+
+  <!-- ===== 連絡先 ===== -->
+  <section id="contact" class="contact first" data-page="contact">
+    <h2><span class="ja">連絡先</span><span class="en">Contact</span></h2>
+    <dl>
+      <dt>Email</dt>
+      <dd>m26c1323 [at] ems.u-toyama.ac.jp<br>kazuki189 [at] icloud.com</dd>
+      <dt>ORCID</dt>
+      <dd><a href="https://orcid.org/0009-0006-5990-8576" target="_blank" rel="noopener">0009-0006-5990-8576</a></dd>
+      <dt>SNS</dt>
+      <dd>
+        <a href="https://x.com/Club_238" target="_blank" rel="noopener">X</a> ·
+        <a href="https://www.instagram.com/club_238/" target="_blank" rel="noopener">Instagram</a> ·
+        <a href="https://soundcloud.com/club_238" target="_blank" rel="noopener">SoundCloud</a>
+      </dd>
+    </dl>
+  </section>
+
+</main>
+
+<footer>© <span id="year"></span> Kazuki Tsuchida</footer>
+
+<div class="lightbox" id="lightbox"><img alt=""><p></p></div>
+
+<script>
+  /* ============================================================
+     ギャラリーの写真はここに追加します。
+     1. 写真を images フォルダに入れる
+     2. 下の一覧に { cat, src, ja, en } を1行ずつ追加
+        cat: outcrop（露頭）/ thin（薄片）/ hand（手標本）/ event（学会・巡検）
+     ※ 写真ファイルがまだ無い行は「準備中」の枠で表示されます
+     ============================================================ */
+  const PHOTOS = [
+    { cat: "outcrop", src: "images/outcrop-01.jpg", ja: "露頭写真（キャプション）", en: "Outcrop (caption)" },
+    { cat: "outcrop", src: "images/outcrop-02.jpg", ja: "露頭写真（キャプション）", en: "Outcrop (caption)" },
+    { cat: "thin",    src: "images/thin-01.jpg",    ja: "薄片写真（直交ニコル）",   en: "Thin section (crossed polars)" },
+    { cat: "thin",    src: "images/thin-02.jpg",    ja: "薄片写真（オープンニコル）", en: "Thin section (plane-polarized light)" },
+    { cat: "hand",    src: "images/hand-01.jpg",    ja: "手標本（キャプション）",   en: "Hand specimen (caption)" },
+    { cat: "event",   src: "images/event-01.jpg",   ja: "学会・巡検の様子",         en: "Conference / excursion" },
+  ];
+
+  const CATS = [
+    { id: "all",     ja: "すべて",     en: "All" },
+    { id: "outcrop", ja: "露頭",       en: "Outcrops" },
+    { id: "thin",    ja: "薄片",       en: "Thin sections" },
+    { id: "hand",    ja: "手標本",     en: "Hand specimens" },
+    { id: "event",   ja: "学会・巡検", en: "Events" },
+  ];
+
+  const html = document.documentElement;
+  const tabsEl = document.getElementById("tabs");
+  const gridEl = document.getElementById("grid");
+  const lb = document.getElementById("lightbox");
+  let current = "all";
+
+  function lang() { return html.lang === "en" ? "en" : "ja"; }
+
+  function renderTabs() {
+    tabsEl.innerHTML = "";
+    CATS.forEach(c => {
+      const b = document.createElement("button");
+      b.className = "tab"; b.type = "button"; b.setAttribute("role", "tab");
+      b.setAttribute("aria-selected", c.id === current);
+      b.textContent = c[lang()];
+      b.onclick = () => { current = c.id; renderTabs(); renderGrid(); };
+      tabsEl.appendChild(b);
+    });
+  }
+
+  function renderGrid() {
+    gridEl.innerHTML = "";
+    PHOTOS.filter(p => current === "all" || p.cat === current).forEach(p => {
+      const fig = document.createElement("figure");
+      const frame = document.createElement("div"); frame.className = "frame";
+      const img = document.createElement("img");
+      img.src = p.src; img.alt = p[lang()]; img.loading = "lazy";
+      img.onerror = () => { frame.innerHTML = '<span class="ph">' + (lang() === "ja" ? "準備中" : "Coming soon") + "</span>"; };
+      img.onclick = () => { lb.querySelector("img").src = p.src; lb.querySelector("p").textContent = p[lang()]; lb.classList.add("open"); };
+      frame.appendChild(img);
+      const cap = document.createElement("figcaption"); cap.textContent = p[lang()];
+      fig.append(frame, cap);
+      gridEl.appendChild(fig);
+    });
+  }
+  lb.onclick = () => lb.classList.remove("open");
+
+  /* 言語切り替え */
+  const btn = document.getElementById("langBtn");
+  function setLang(l) {
+    html.lang = l;
+    btn.textContent = l === "ja" ? "EN" : "JA";
+    try { localStorage.setItem("lang", l); } catch (e) {}
+    renderTabs(); renderGrid();
+  }
+  let saved = null;
+  try { saved = localStorage.getItem("lang"); } catch (e) {}
+  btn.onclick = () => setLang(lang() === "ja" ? "en" : "ja");
+  setLang(saved === "en" ? "en" : "ja");
+
+  /* ページタブ切り替え（URL末尾の #publications などで直接開ける） */
+  const PAGES = ["profile", "publications", "gallery", "novumex", "other", "contact"];
+  function showPage(id, push) {
+    if (!PAGES.includes(id)) id = "profile";
+    document.querySelectorAll("#pageTabs button").forEach(b =>
+      b.setAttribute("aria-selected", b.dataset.page === id));
+    document.querySelectorAll("main [data-page]").forEach(el =>
+      el.classList.toggle("active", el.dataset.page === id));
+    if (push) history.replaceState(null, "", id === "profile" ? location.pathname : "#" + id);
+    window.scrollTo(0, 0);
+  }
+  document.querySelectorAll("#pageTabs button").forEach(b =>
+    b.addEventListener("click", () => showPage(b.dataset.page, true)));
+  window.addEventListener("hashchange", () => showPage(location.hash.slice(1)));
+  showPage(location.hash.slice(1));
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
